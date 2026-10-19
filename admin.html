@@ -14,12 +14,18 @@
 </header>
 <main class="wrap">
   <div class="intro">
-    <p class="kicker">PANEL DE ADMINISTRACIÓN · PROTOTIPO</p>
+    <p class="kicker">PANEL DE ADMINISTRACIÓN · CONECTADO A SUPABASE</p>
     <h1>Gestiona tus <em>datos locales.</em></h1>
-    <p>Agrega negocios, corrige direcciones, clasifica comidas y guarda enlaces de videos. Los cambios de esta versión se guardan solo en este navegador.</p>
+    <p>Administra los locales de la base compartida. Los cambios guardados se reflejan en la página pública.</p>
   </div>
 
-  <div class="warning"><strong>Importante:</strong> este panel todavía no tiene usuarios, contraseña ni base de datos compartida. Sirve para probar y preparar los datos en tu computador. No publiques información privada ni lo consideres un panel seguro para administrar una web pública.</div>
+  <div class="warning" id="auth-warning"><strong>Acceso privado:</strong> inicia sesión con la cuenta autorizada de Supabase. No crees cuentas desde este panel.</div>
+  <section id="login-panel" class="form-panel" style="max-width:520px;margin:0 auto 24px">
+    <div class="panel-title"><span>ACCESO PRIVADO</span><h2>Iniciar sesión</h2></div>
+    <form id="login-form"><label>Correo electrónico<input id="login-email" type="email" required autocomplete="username"></label><label>Contraseña<input id="login-password" type="password" required autocomplete="current-password"></label><div class="form-actions"><button class="save" type="submit">Entrar al panel</button></div><p class="form-message" id="login-message" aria-live="polite"></p></form>
+  </section>
+  <div id="admin-app" hidden>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button id="logout-btn" class="cancel" type="button">Cerrar sesión</button></div>
 
   <section class="workspace">
     <div class="form-panel">
@@ -83,7 +89,10 @@
       <p class="footnote">Guarda una copia con “Exportar JSON” antes de cerrar o cambiar de equipo. El archivo exportado puede reemplazar la base lugares.json del proyecto.</p>
     </div>
   </section>
+  </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

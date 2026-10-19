@@ -1,0 +1,10 @@
+DATO VALDIVIA - versión conectada a Supabase
+
+1. Revisa SEGURIDAD-SUPABASE.sql. Reemplaza TU_CORREO_ADMIN por el correo exacto de tu cuenta administradora antes de ejecutarlo.
+2. En Supabase > Authentication > Users, crea/invita solamente tu cuenta administradora. Desactiva los registros públicos de usuarios en Authentication > Settings/Sign In si aparecen habilitados.
+3. Ejecuta el SQL de seguridad en SQL Editor. La página pública puede leer los locales; solo el correo configurado podrá crear, editar o borrar.
+4. Sube a GitHub Pages los archivos de esta carpeta, incluyendo supabase-config.js, pero NO compartas claves secretas/service_role. La clave incluida es publishable.
+5. La tabla debe tener columnas: id, nombre, categoria, direccion, latitud, longitud, acepta_junaeb, descripcion, precio, video_url, junaeb, detalle, web, tipo_negocio, economico, menu_junaeb, tipo_categoria. Los nombres extra pueden existir sin problema.
+6. Si la columna id es bigint identity, las operaciones del panel funcionarán.
+7. El panel no podrá escribir hasta que ejecutes el SQL y crees la cuenta administradora.
+8. La página pública consulta Supabase; si falla, muestra lugares.json como respaldo local. Después de publicar, confirma que cargue la base remota.

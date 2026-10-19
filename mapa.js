@@ -247,21 +247,24 @@ document.getElementById("ver-todos").addEventListener("click", () => {
 
 async function iniciar() {
   try {
-    // Prototipo: usa los datos guardados en este navegador si existen.
-    // Si no existen, carga la base inicial desde lugares.json.
+    // Lee primero la base compartida de Supabase; usa lugares.json solo como respaldo temporal.
     let datos;
     try {
-      const guardados = localStorage.getItem("datoValdivia_lugares");
-      datos = guardados ? JSON.parse(guardados) : null;
+      const response = await fetch(`${window.DATO_SUPABASE_URL}/rest/v1/lugares?select=*&order=id.asc`, {
+        headers: { apikey: window.DATO_SUPABASE_KEY, Authorization: `Bearer ${window.DATO_SUPABASE_KEY}` }
+      });
+      if (!response.ok) throw new Error(`Supabase respondió ${response.status}`);
+      datos = await response.json();
+      if (!Array.isArray(datos)) throw new Error("La respuesta de Supabase no es una lista");
+      console.info(`Dato Valdivia: ${datos.length} locales cargados desde Supabase.`);
     } catch (e) {
-      console.warn("No se pudieron leer datos locales; se usará lugares.json.", e);
-    }
-    if (!Array.isArray(datos)) {
+      console.error("No se pudo leer Supabase; se intentará cargar el JSON local.", e);
       const respuesta = await fetch("./lugares.json");
-      if (!respuesta.ok) throw new Error("No se pudo cargar lugares.json");
+      if (!respuesta.ok) throw new Error("No se pudo cargar Supabase ni lugares.json");
       datos = await respuesta.json();
+      estado.textContent = "Mostrando una copia local de respaldo; la base compartida no respondió.";
     }
-    if (!Array.isArray(datos)) throw new Error("El archivo debe ser una lista");
+    if (!Array.isArray(datos)) throw new Error("La base de datos no devolvió una lista");
 
     datos.forEach(lugar => {
       if (typeof lugar.nombre !== "string" ||
@@ -276,6 +279,9 @@ async function iniciar() {
       lugar.detalle = lugar.detalle || "";
       lugar.web = lugar.web || "";
       lugar.junaeb = lugar.junaeb || "No indicado en planilla";
+      lugar.menu_junaeb = Boolean(lugar.menu_junaeb);
+      lugar.economico = Boolean(lugar.economico);
+      lugar.tipo_categoria = lugar.tipo_categoria || (String(lugar.categoria).toLowerCase().includes("supermercado") ? "Supermercado" : "Comida");
       lugares.push(lugar);
     });
 
