@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172b4d">
+<title>Administrar datos | Dato Valdivia</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><span class="mark">dv<span>!</span></span><span>dato<span class="sub">valdivia</span></span></a>
+  <a href="index.html" class="back">← Volver al mapa</a>
+</header>
+<main class="wrap">
+  <div class="intro">
+    <p class="kicker">PANEL DE ADMINISTRACIÓN · PROTOTIPO</p>
+    <h1>Gestiona tus <em>datos locales.</em></h1>
+    <p>Agrega negocios, corrige direcciones, clasifica comidas y guarda enlaces de videos. Los cambios de esta versión se guardan solo en este navegador.</p>
+  </div>
+
+  <div class="warning"><strong>Importante:</strong> este panel todavía no tiene usuarios, contraseña ni base de datos compartida. Sirve para probar y preparar los datos en tu computador. No publiques información privada ni lo consideres un panel seguro para administrar una web pública.</div>
+
+  <section class="workspace">
+    <div class="form-panel">
+      <div class="panel-title"><span id="form-eyebrow">NUEVO REGISTRO</span><h2 id="form-title">Agregar un local</h2></div>
+      <form id="form-local">
+        <input type="hidden" id="edit-id">
+        <label>Nombre del local *<input id="nombre" required maxlength="100" placeholder="Ej.: Sushi del centro"></label>
+        <div class="two">
+          <label>Tipo de lugar
+            <select id="tipo">
+              <option value="Comida">Local de comida</option>
+              <option value="Supermercado">Supermercado</option>
+            </select>
+          </label>
+          <label>Tipo de comida
+            <select id="categoria">
+              <option value="sushi">Sushi</option><option value="completos">Completos</option>
+              <option value="hamburguesas">Hamburguesas</option><option value="Pizza">Pizza</option>
+              <option value="Comida China">Comida china</option><option value="Shawarma">Shawarma</option>
+              <option value="tacos">Tacos</option><option value="pollo frito">Pollo frito</option>
+              <option value="Cafeteria">Cafetería</option><option value="comida casera">Comida casera</option>
+              <option value="Supermercado">Supermercado</option><option value="Otro">Otro</option>
+            </select>
+          </label>
+        </div>
+        <label>Dirección<input id="direccion" maxlength="200" placeholder="Calle, número, sector"></label>
+        <div class="two">
+          <label>Latitud *<input id="latitud" type="number" step="any" min="-90" max="90" required placeholder="-39.8142"></label>
+          <label>Longitud *<input id="longitud" type="number" step="any" min="-180" max="180" required placeholder="-73.2459"></label>
+        </div>
+        <label>Información de precios / menú<textarea id="detalle" rows="3" maxlength="500" placeholder="Ej.: menú desde $5.500, promociones..."></textarea></label>
+        <label>Estado Junaeb
+          <select id="junaeb">
+            <option value="No indicado en planilla">No confirmado</option>
+            <option value="Sí, según planilla">Sí, según planilla</option>
+          </select>
+        </label>
+        <label>Enlace del local o redes<input id="web" type="url" placeholder="https://..."></label>
+        <label>Enlace de video (YouTube o Shorts)<input id="video" type="url" placeholder="https://youtu.be/..."></label>
+        <div class="checks">
+          <label class="check"><input id="menu-junaeb" type="checkbox"> Tiene menú Junaeb indicado</label>
+          <label class="check"><input id="economico" type="checkbox"> Marcar como dato económico</label>
+        </div>
+        <div class="form-actions">
+          <button class="save" type="submit" id="save-btn">Guardar local</button>
+          <button class="cancel" type="button" id="cancel-btn" hidden>Cancelar edición</button>
+        </div>
+        <p class="form-message" id="form-message" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="data-panel">
+      <div class="data-heading"><div><p class="kicker">TU BASE DE DATOS</p><h2>Locales registrados</h2><p id="summary">Cargando…</p></div></div>
+      <div class="tools">
+        <input id="search-admin" type="search" placeholder="Buscar local...">
+        <button id="exportar" class="secondary">Exportar JSON ↓</button>
+        <label class="import-btn">Importar JSON ↑<input id="importar" type="file" accept=".json,application/json" hidden></label>
+        <button id="resetear" class="danger-light">Restaurar base original</button>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Local</th><th>Categoría</th><th>Ubicación</th><th>Acciones</th></tr></thead><tbody id="tabla"></tbody></table></div>
+      <p class="footnote">Guarda una copia con “Exportar JSON” antes de cerrar o cambiar de equipo. El archivo exportado puede reemplazar la base lugares.json del proyecto.</p>
+    </div>
+  </section>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>
