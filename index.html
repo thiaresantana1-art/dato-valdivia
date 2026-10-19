@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172b4d">
+  <title>Dato Valdivia | Comer rico y gastar menos</title>
+  <meta name="description" content="Guía estudiantil para encontrar lugares donde comer barato, comprar y consultar opciones con Junaeb en Valdivia.">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div class="announcement"><span class="announcement-dot"></span> UNA GUÍA HECHA PARA LA VIDA ESTUDIANTIL EN VALDIVIA <span class="announcement-right">Sur de Chile ✳</span></div>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Dato Valdivia, inicio">
+      <span class="brand-symbol">dv<span>!</span></span>
+      <span class="brand-text">dato<span>valdivia</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#explorar">Explorar lugares</a>
+      <a href="#como-funciona">Cómo funciona</a>
+    </nav>
+    <a class="header-cta" href="#explorar">Encuentra tu dato <span>↗</span></a>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> TU GUÍA LOCAL, MODO ESTUDIANTE</div>
+        <h1>Comer rico.<br>Gastar <em>menos.</em><br><span>Vivir Valdi.</span></h1>
+        <p class="hero-lede">¿Dónde puedo usar la Junaeb? ¿Qué hay para comer sin gastar de más? Encuentra locales, supermercados y datos útiles en un solo mapa.</p>
+        <div class="hero-actions">
+          <a class="button-primary" href="#explorar">Explorar el mapa <span>↓</span></a>
+          <a class="button-quiet" href="#como-funciona">Conoce el proyecto <span>↗</span></a>
+        </div>
+        <div class="hero-proof"><span class="proof-avatars"><b>U</b><b>✳</b><b>V</b></span><span>Datos locales para moverte mejor por Valdivia.</span></div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-blob blob-lime"></div><div class="visual-blob blob-lilac"></div>
+        <div class="visual-map">
+          <div class="fake-map-lines"></div>
+          <span class="fake-river"></span>
+          <span class="fake-pin pin-one">⌖</span><span class="fake-pin pin-two">✳</span><span class="fake-pin pin-three">↗</span>
+          <div class="fake-place-card"><span class="tiny-store">⌂</span><div><b>¿Un dato bueno?</b><small>Está más cerca de lo que crees.</small></div><span class="card-arrow">↗</span></div>
+          <div class="map-label-sticker">TU PRÓXIMA<br><b>PARADA</b> ✳</div>
+        </div>
+        <div class="float-pill pill-junaeb"><span>✓</span> Datos Junaeb</div>
+        <div class="float-pill pill-food">🍜 <b>Algo rico y piola</b></div>
+        <div class="visual-caption">VALDI<br>VALDI<br><span>VALDI ↗</span></div>
+      </div>
+    </section>
+
+    <section class="stats-strip" aria-label="Resumen de la guía">
+      <div class="stat"><span class="stat-icon icon-lime">⌖</span><div><strong id="stat-total">48 lugares</strong><small>en la base de datos</small></div></div>
+      <div class="stat"><span class="stat-icon icon-peach">▤</span><div><strong id="stat-junaeb">—</strong><small>marcados Junaeb en la planilla</small></div></div>
+      <div class="stat"><span class="stat-icon icon-lilac">⌕</span><div><strong>Un solo mapa</strong><small>para buscar tu próximo dato</small></div></div>
+    </section>
+
+    <section class="explore-section" id="explorar">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">EL MAPA DE LOS DATOS</p>
+          <h2>¿Qué andas buscando?</h2>
+          <p class="section-description">Busca por nombre, tipo de comida o dirección. Selecciona un lugar para ver más información.</p>
+        </div>
+        <div class="city-chip"><span>●</span> Valdivia, Los Ríos</div>
+      </div>
+
+      <div class="filter-toolbar">
+        <div class="filter-intro"><span class="filter-intro-icon">✳</span><div><b>Encuentra tu opción</b><small>Filtra la lista según lo que necesitas hoy.</small></div></div>
+        <div class="filter-buttons" role="group" aria-label="Filtrar lugares">
+          <button class="filter-btn active" data-filter="todos">Todos <span id="filter-total">48</span></button>
+          <button class="filter-btn" data-filter="junaeb">Junaeb</button>
+          <button class="filter-btn" data-filter="supermercados">Supermercados</button>
+          <button class="filter-btn" data-filter="economicos">Datos económicos</button>
+        </div>
+      </div>
+
+      <div class="map-layout">
+        <aside class="results-panel">
+          <div class="search-field"><span aria-hidden="true">⌕</span><input id="busqueda" type="search" placeholder="Busca local, comida o dirección…" autocomplete="off"><button id="limpiar" type="button" aria-label="Limpiar búsqueda" title="Limpiar">×</button></div>
+          <div class="results-header"><span>LOCALES Y DATOS</span><span id="resultado-count">Cargando…</span></div>
+          <p id="estado" class="results-hint" aria-live="polite">Cargando lugares…</p>
+          <div id="lista" class="results-list"></div>
+          <div class="source-note"><span>ⓘ</span><p><b>Un dato importante</b><br>La información de Junaeb y precios viene de la planilla recopilada. Confirma condiciones, menú y disponibilidad directamente con cada local antes de comprar.</p></div>
+        </aside>
+        <div class="map-panel">
+          <div class="map-topline"><div><span class="map-live-dot"></span><b>MAPA INTERACTIVO</b><span class="map-sub">Explora los puntos de Valdivia</span></div><button id="ver-todos" type="button">Ver todos ↗</button></div>
+          <div id="mapa" aria-label="Mapa interactivo de locales y supermercados en Valdivia"></div>
+          <div class="map-footer"><span class="map-legend-dot"></span> Local individual <span class="cluster-legend">Los números agrupan locales cercanos</span><span class="map-credit">© OpenStreetMap</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-section" id="como-funciona">
+      <div class="how-heading"><p class="section-kicker">SIMPLE, COMO DEBERÍA SER</p><h2>Un buen dato te salva el día.</h2><p>Una guía local para estudiantes que quieren encontrar alternativas sin perder tiempo ni presupuesto.</p></div>
+      <div class="how-grid">
+        <article class="how-card"><span class="how-number">01</span><span class="how-icon how-lime">⌕</span><h3>Busca</h3><p>Escribe un nombre, una dirección o el tipo de comida que se te antoja.</p></article>
+        <article class="how-card"><span class="how-number">02</span><span class="how-icon how-peach">⌖</span><h3>Ubica</h3><p>Encuentra el local en el mapa y revisa qué otros lugares hay cerca.</p></article>
+        <article class="how-card"><span class="how-number">03</span><span class="how-icon how-lilac">♡</span><h3>Elige mejor</h3><p>Revisa los datos disponibles y confirma directamente los precios y condiciones.</p></article>
+      </div>
+    </section>
+
+    <section class="community-banner">
+      <div class="community-star">✳</div><div><p class="section-kicker">ESTO LO CONSTRUIMOS ENTRE TODOS</p><h2>¿Conoces un dato que<br>debería estar en el mapa?</h2><p>La idea es sumar más lugares, precios y datos útiles para la comunidad estudiantil.</p></div><a href="mailto:datovaldivia@gmail.com?subject=Quiero%20compartir%20un%20dato" class="community-button">Compartir un dato ↗</a>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand footer-brand" href="#inicio"><span class="brand-symbol">dv<span>!</span></span><span class="brand-text">dato<span>valdivia</span></span></a><p>Un proyecto estudiantil independiente. La información puede cambiar; verifica antes de ir.</p><a href="#inicio">Volver arriba ↑</a></footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <script src="mapa.js"></script>
+</body>
+</html>
