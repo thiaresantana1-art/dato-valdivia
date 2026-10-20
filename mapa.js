@@ -46,9 +46,12 @@ function safeExternalLink(url) {
   } catch {}
   return "";
 }
-function normalizeAddress(address) {
-  return address.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase("es").replace(/[.,]/g, " ").replace(/\s+/g, " ").trim();
+function normalizar(texto) {
+  return String(texto || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("es")
+    .trim();
 }
 function placeStatus(lugar) {
   if (lugar.menu_junaeb) return "Menú Junaeb indicado en planilla";
