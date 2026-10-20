@@ -1,0 +1,7 @@
+DATO VALDIVIA — PAQUETE DE REPARACIÓN
+
+Este paquete restaura los filtros compatibles con mapa.js y corrige la carga de supabase-config.js en la página pública. También restaura el panel admin conectado a Supabase, en vez de una versión antigua que guardaba únicamente en el navegador.
+
+Sube estos archivos a la raíz del repositorio GitHub: index.html, estilos.css, mapa.js, admin.html, admin.css, admin.js, supabase-config.js y lugares.json. No ejecutes SQL ni cambies políticas de Supabase.
+
+La clave incluida en supabase-config.js es la clave pública publishable/anon destinada al navegador; nunca incluyas service_role. La inserción de locales depende de iniciar sesión con un usuario autorizado y de las políticas RLS ya existentes.
