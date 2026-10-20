@@ -121,9 +121,6 @@ function popupForGroup(grupo) {
   });
   return wrap;
 }
-function normalizar(texto) {
-  return String(texto || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
-}
 
 function youtubeEmbed(url) {
   try {
