@@ -55,7 +55,7 @@ function normalizar(texto) {
 }
 function placeStatus(lugar) {
   if (lugar.menu_junaeb) return "Menú Junaeb indicado en planilla";
-  if (lugar.junaeb.startsWith("Sí")) return "Junaeb indicada en planilla";
+  if (String(lugar.junaeb || "").startsWith("Sí")) return "Junaeb indicada en planilla";
   return "Junaeb no indicada en planilla";
 }
 function popupForGroup(grupo) {
@@ -78,7 +78,7 @@ function popupForGroup(grupo) {
     const type = document.createElement("div");
     type.textContent = lugar.categoria;
     const status = document.createElement("span");
-    status.className = "popup-status" + (lugar.junaeb.startsWith("Sí") ? "" : " no");
+    status.className = "popup-status" + (String(lugar.junaeb || "").startsWith("Sí") ? "" : " no");
     status.textContent = placeStatus(lugar);
     item.append(name, type, status);
     if (lugar.detalle) {
@@ -203,7 +203,7 @@ function mostrarLugares() {
       badge.className = "mini-badge junaeb";
       badge.textContent = "Menú Junaeb*";
       badges.append(badge);
-    } else if (lugar.junaeb.startsWith("Sí")) {
+    } else if (String(lugar.junaeb || "").startsWith("Sí")) {
       const badge = document.createElement("span");
       badge.className = "mini-badge junaeb";
       badge.textContent = "Junaeb*";
@@ -222,8 +222,11 @@ function mostrarLugares() {
     flecha.textContent = "↗";
     boton.append(icono, copy, flecha);
     boton.addEventListener("click", () => {
-      mapa.setView([lugar.grupo.latitud, lugar.grupo.longitud], 17, { animate: true });
-      marcadores.zoomToShowLayer(lugar.grupo.marcador, () => lugar.grupo.marcador.openPopup());
+      const grupo = lugar.grupo;
+      if (!grupo || !grupo.marcador) return;
+      mapa.setView([grupo.latitud, grupo.longitud], 17, { animate: true });
+      if (!marcadores.hasLayer(grupo.marcador)) marcadores.addLayer(grupo.marcador);
+      marcadores.zoomToShowLayer(grupo.marcador, () => grupo.marcador.openPopup());
       if (window.innerWidth < 720) {
         document.getElementById("mapa").scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -259,6 +262,13 @@ document.getElementById("ver-todos").addEventListener("click", () => {
   }
 });
 
+function normalizeAddress(address) {
+  return normalizar(address)
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 async function iniciar() {
   try {
     // Lee primero la base compartida de Supabase; usa lugares.json solo como respaldo temporal.
@@ -281,6 +291,9 @@ async function iniciar() {
     if (!Array.isArray(datos)) throw new Error("La base de datos no devolvió una lista");
 
     datos.forEach(lugar => {
+      // Supabase puede entregar coordenadas como texto; convertirlas a números antes de validarlas.
+      lugar.latitud = Number(lugar.latitud);
+      lugar.longitud = Number(lugar.longitud);
       if (typeof lugar.nombre !== "string" ||
           !Number.isFinite(lugar.latitud) || !Number.isFinite(lugar.longitud) ||
           lugar.latitud < -90 || lugar.latitud > 90 ||
@@ -325,7 +338,7 @@ async function iniciar() {
 
     totalStat.textContent = `${lugares.length} lugares`;
     filterTotal.textContent = lugares.length;
-    junaebStat.textContent = lugares.filter(x => x.junaeb.startsWith("Sí")).length;
+    junaebStat.textContent = lugares.filter(x => String(x.junaeb || "").startsWith("Sí")).length;
     todosBounds = L.latLngBounds(lugares.map(x => [x.latitud, x.longitud]));
     if (todosBounds.isValid()) mapa.fitBounds(todosBounds, { padding: [28,28], maxZoom: 14 });
     mostrarLugares();
