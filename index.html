@@ -21,7 +21,6 @@
     <nav class="nav">
       <a href="#explorar">Explorar lugares</a>
       <a href="#como-funciona">Cómo funciona</a>
-      <a href="#colaboradores">Colaboradores</a>
     </nav>
     <a class="header-cta" href="#explorar">Encuentra tu dato <span>↗</span></a>
   </header>
@@ -38,12 +37,18 @@
         </div>
         <div class="hero-proof"><span class="proof-avatars"><b>U</b><b>✳</b><b>V</b></span><span>Datos locales para moverte mejor por Valdivia.</span></div>
       </div>
-      <div class="hero-visual hero-photo-frame">
-        <img class="hero-photo" src="imagenes/portada.jpg" alt="Fotografía de Valdivia: reemplaza esta imagen por una foto propia" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="hero-photo-placeholder"><span class="placeholder-icon">✳</span><b>Tu foto de Valdivia va aquí</b><span>Sube una imagen llamada <code>portada.jpg</code> a la carpeta <code>imagenes</code>.</span></div>
-        <div class="photo-sticker">TU PRÓXIMA<br><b>PARADA</b> ↗</div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-blob blob-lime"></div><div class="visual-blob blob-lilac"></div>
+        <div class="visual-map">
+          <div class="fake-map-lines"></div>
+          <span class="fake-river"></span>
+          <span class="fake-pin pin-one">⌖</span><span class="fake-pin pin-two">✳</span><span class="fake-pin pin-three">↗</span>
+          <div class="fake-place-card"><span class="tiny-store">⌂</span><div><b>¿Un dato bueno?</b><small>Está más cerca de lo que crees.</small></div><span class="card-arrow">↗</span></div>
+          <div class="map-label-sticker">TU PRÓXIMA<br><b>PARADA</b> ✳</div>
+        </div>
         <div class="float-pill pill-junaeb"><span>✓</span> Datos Junaeb</div>
         <div class="float-pill pill-food">🍜 <b>Algo rico y piola</b></div>
+        <div class="visual-caption">VALDI<br>VALDI<br><span>VALDI ↗</span></div>
       </div>
     </section>
 
@@ -66,10 +71,14 @@
       <div class="filter-toolbar">
         <div class="filter-intro"><span class="filter-intro-icon">✳</span><div><b>Encuentra tu opción</b><small>Filtra la lista según lo que necesitas hoy.</small></div></div>
         <div class="filter-buttons" role="group" aria-label="Filtrar lugares">
-          <button class="filter-btn active" data-filter="todos">Todos <span id="filter-total">48</span></button>
-          <button class="filter-btn" data-filter="junaeb">Junaeb</button>
-          <button class="filter-btn" data-filter="supermercados">Supermercados</button>
-          <button class="filter-btn" data-filter="economicos">Datos económicos</button>
+          <button class="filter-btn active" data-filter="todos">📍 Todos <span id="filter-total">48</span></button>
+          <button class="filter-btn" data-filter="sushi">🍣 Sushi</button>
+          <button class="filter-btn" data-filter="completos">🌭 Completos</button>
+          <button class="filter-btn" data-filter="hamburguesas">🍔 Hamburguesas</button>
+          <button class="filter-btn" data-filter="supermercados">🛒 Supermercados</button>
+          <button class="filter-btn" data-filter="junaeb">💳 Junaeb</button>
+          <button class="filter-btn" data-filter="economicos">💰 Datos económicos</button>
+          <button class="filter-btn" data-filter="otros">🍽️ Otros locales</button>
         </div>
       </div>
 
@@ -98,17 +107,6 @@
       </div>
     </section>
 
-
-    <section class="partners-section" id="colaboradores">
-      <div class="section-heading partners-heading"><div><p class="section-kicker">RED LOCAL · COMUNIDAD</p><h2>Crece con buenos aliados.</h2><p class="section-description">Queremos conectar estudiantes, instituciones y negocios locales. Estos espacios están preparados para sumar colaboradores reales.</p></div><span class="partners-badge">🤝 Colaboración abierta</span></div>
-      <div class="partners-grid">
-        <article class="partner-card"><div class="partner-logo-placeholder">🏛️</div><p class="partner-type">INSTITUCIONES</p><h3>Instituciones y universidades</h3><p>Un espacio para organizaciones que apoyan la vida estudiantil en Valdivia.</p><span class="partner-status">Espacio disponible para colaboradores</span></article>
-        <article class="partner-card"><div class="partner-logo-placeholder">🍽️</div><p class="partner-type">NEGOCIOS LOCALES</p><h3>Emprendimientos y locales</h3><p>Visibilizamos negocios, alternativas económicas y datos útiles para la comunidad.</p><span class="partner-status">Espacio disponible para colaboradores</span></article>
-        <article class="partner-card partner-invite"><div class="partner-logo-placeholder">✳</div><p class="partner-type">¿TE SUMAS?</p><h3>Construyamos esta guía juntos.</h3><p>Si representas una institución o negocio, conversemos sobre una colaboración.</p><a href="mailto:datovaldivia@gmail.com?subject=Colaborar%20con%20Dato%20Valdivia" class="partner-link">Proponer colaboración ↗</a></article>
-      </div>
-      <p class="partners-note">Los espacios son provisionales: agrega nombres y logos solo cuando exista una colaboración confirmada y autorización para usar su marca.</p>
-    </section>
-
     <section class="community-banner">
       <div class="community-star">✳</div><div><p class="section-kicker">ESTO LO CONSTRUIMOS ENTRE TODOS</p><h2>¿Conoces un dato que<br>debería estar en el mapa?</h2><p>La idea es sumar más lugares, precios y datos útiles para la comunidad estudiantil.</p></div><a href="mailto:datovaldivia@gmail.com?subject=Quiero%20compartir%20un%20dato" class="community-button">Compartir un dato ↗</a>
     </section>
@@ -120,7 +118,6 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <script src="supabase-config.js"></script>
   <script src="mapa.js"></script>
 </body>
 </html>
