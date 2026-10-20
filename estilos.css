@@ -42,3 +42,202 @@
 .filter-btn{flex:0 0 auto;white-space:nowrap;min-height:36px}
 .filter-btn.active{background:#174f49;border-color:#174f49;color:#fff}
 @media(max-width:720px){.filter-buttons{gap:7px}.filter-btn{font-size:10px;padding:9px 11px}.filter-intro{width:100%}}
+
+
+/* ==========================================
+   DATO VALDIVIA 2.0 — PULIDO FINAL
+   Agregar al final de estilos.css
+   ========================================== */
+
+/* Tipografía y desplazamiento */
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Navegación */
+.nav a:hover {
+  color: var(--blue);
+}
+
+.header-cta:hover {
+  background: #0d6861;
+  transform: translateY(-2px);
+}
+
+/* Portada */
+.hero {
+  background:
+    radial-gradient(
+      ellipse at 8% 0%,
+      rgba(231, 199, 90, 0.13),
+      transparent 38%
+    ),
+    var(--paper);
+}
+
+.hero-photo {
+  border: 7px solid #fff;
+  box-shadow: 0 24px 55px rgba(23, 63, 59, 0.15);
+}
+
+.button-primary:hover {
+  transform: translateY(2px);
+}
+
+/* Filtros */
+.filter-toolbar {
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(23, 63, 59, 0.05);
+}
+
+.filter-btn:hover {
+  border-color: #82b6a5;
+  background: #f0f7f3;
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: #174f49;
+  border-color: #174f49;
+  color: #fff;
+}
+
+/* Búsqueda */
+.search-field {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-field:focus-within {
+  border-color: #68a899;
+  box-shadow: 0 0 0 4px rgba(8, 126, 139, 0.09);
+}
+
+.search-field input {
+  font-size: 12px;
+}
+
+.search-field input::placeholder {
+  color: #8a9c95;
+}
+
+/* Tarjetas de locales */
+.place-card {
+  border: 1px solid transparent;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.place-card:hover {
+  border-color: #b6d8ce;
+  background: #f0f7f3;
+  box-shadow: 0 5px 14px rgba(23, 63, 59, 0.06);
+  transform: translateY(-1px);
+}
+
+.place-copy strong {
+  line-height: 1.5;
+}
+
+.place-copy small {
+  line-height: 1.6;
+}
+
+/* Mapa y ventanas emergentes */
+.map-layout {
+  box-shadow: 0 14px 40px rgba(23, 63, 59, 0.07);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 14px !important;
+}
+
+.leaflet-popup-content a {
+  color: #087e8b;
+}
+
+/* Tarjetas informativas */
+.how-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.how-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(23, 63, 59, 0.07);
+}
+
+.project-fact,
+.creator-row {
+  min-width: 0;
+}
+
+.project-fact h3,
+.creator-row p {
+  overflow-wrap: anywhere;
+}
+
+/* Accesibilidad */
+:focus-visible {
+  outline: 3px solid rgba(8, 126, 139, 0.55);
+  outline-offset: 3px;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 720px) {
+  .filter-toolbar {
+    align-items: flex-start;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    width: 100%;
+  }
+
+  .filter-btn {
+    min-height: 36px;
+    padding: 9px 11px;
+  }
+
+  .place-card:hover,
+  .how-card:hover {
+    transform: none;
+  }
+
+  .hero-photo {
+    max-width: 100%;
+  }
+}
+
+/* Respetar las preferencias de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
