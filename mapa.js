@@ -119,7 +119,7 @@ function popupForGroup(grupo) {
   return wrap;
 }
 function normalizar(texto) {
-  return String(texto || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLocaleLowerCase("es");
+  return String(texto || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es");
 }
 
 function youtubeEmbed(url) {
@@ -138,22 +138,36 @@ function youtubeEmbed(url) {
 
 function matchesFilter(lugar) {
   const categoria = normalizar(lugar.categoria);
-  if (filtroActual === "junaeb") return lugar.junaeb.startsWith("Sí");
-  if (filtroActual === "supermercados") return lugar.tipo_categoria === "Supermercado";
-  if (filtroActual === "sushi") return categoria.includes("sushi");
-  if (filtroActual === "completos") return categoria.includes("completo") || categoria.includes("hot dog");
-  if (filtroActual === "hamburguesas") return categoria.includes("hamburguesa") || categoria.includes("burger");
-  if (filtroActual === "otros") return lugar.tipo_categoria === "Comida" &&
-    !categoria.includes("sushi") && !categoria.includes("completo") &&
-    !categoria.includes("hot dog") && !categoria.includes("hamburguesa") &&
-    !categoria.includes("burger");
-  if (filtroActual === "economicos") return lugar.economico;
+  const tipo = normalizar(lugar.tipo_categoria);
+  const esComida = tipo !== "supermercado";
+  const contiene = (...palabras) => palabras.some(palabra => categoria.includes(palabra));
+
+  if (filtroActual === "junaeb") return String(lugar.junaeb || "").startsWith("Sí");
+  if (filtroActual === "supermercados") return tipo === "supermercado";
+  if (filtroActual === "sushi") return esComida && contiene("sushi");
+  if (filtroActual === "completos") return esComida && contiene("completo", "hot dog", "hotdog");
+  if (filtroActual === "hamburguesas") return esComida && contiene("hamburguesa", "burger");
+  if (filtroActual === "comida-china") return esComida && contiene("comida china", "china", "chinese");
+  if (filtroActual === "shawarma") return esComida && contiene("shawarma", "kebab");
+  if (filtroActual === "tacos") return esComida && contiene("taco", "mexicana", "mexicano");
+  if (filtroActual === "cafeterias") return esComida && contiene("cafeteria", "cafe", "coffee");
+  if (filtroActual === "papas-fritas") return esComida && contiene("papas fritas", "fritas", "fries");
+  if (filtroActual === "pizza") return esComida && contiene("pizza", "pizzeria");
+  if (filtroActual === "comida-casera") return esComida && contiene("comida casera", "casera", "menu del dia");
+  if (filtroActual === "otros") {
+    const conocidas = ["sushi", "completo", "hot dog", "hotdog", "hamburguesa", "burger",
+      "comida china", "china", "chinese", "shawarma", "kebab", "taco", "mexicana", "mexicano",
+      "cafeteria", "cafe", "coffee", "papas fritas", "fritas", "fries", "pizza", "pizzeria",
+      "comida casera", "casera", "menu del dia"];
+    return esComida && !conocidas.some(palabra => categoria.includes(palabra));
+  }
+  if (filtroActual === "economicos") return Boolean(lugar.economico);
   return true;
 }
 function getFilteredPlaces() {
-  const texto = busqueda.value.trim().toLocaleLowerCase("es");
+  const texto = normalizar(busqueda.value.trim());
   return lugares.filter(lugar => {
-    const searchable = `${lugar.nombre} ${lugar.categoria} ${lugar.direccion} ${lugar.detalle}`.toLocaleLowerCase("es");
+    const searchable = normalizar(`${lugar.nombre} ${lugar.categoria} ${lugar.direccion} ${lugar.detalle}`);
     return searchable.includes(texto) && matchesFilter(lugar);
   });
 }
